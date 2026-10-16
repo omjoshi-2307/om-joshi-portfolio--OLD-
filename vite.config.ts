@@ -21,17 +21,22 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id: string) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+          const normalizedId = id.replace(/\\/g, '/');
+
+          if (normalizedId.includes('node_modules')) {
+            if (normalizedId.includes('react') || normalizedId.includes('react-dom') || normalizedId.includes('scheduler')) {
               return 'vendor-react';
             }
-            if (id.includes('framer-motion')) {
+            if (normalizedId.includes('framer-motion')) {
               return 'vendor-motion';
             }
-            if (id.includes('lucide-react')) {
+            if (normalizedId.includes('lucide-react')) {
               return 'vendor-icons';
             }
-            if (id.includes('three')) {
+            if (
+              normalizedId.includes('/node_modules/three/') ||
+              normalizedId.includes('/node_modules/@react-three/')
+            ) {
               return 'vendor-three';
             }
           }

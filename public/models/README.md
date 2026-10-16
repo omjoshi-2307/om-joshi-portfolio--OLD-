@@ -1,8 +1,13 @@
 # 3D Avatar Models Directory
 
-Place the real 3D model asset in this directory as:
+This directory is intentionally empty until an approved avatar model is
+provided. Do not create a placeholder file and do not add an unapproved model.
 
-```
+## Optional model
+
+Place the approved model in this directory with this exact name:
+
+```text
 public/models/om-avatar.glb
 ```
 
@@ -22,6 +27,15 @@ public/models/om-avatar.glb
 
 ## Automatic Detection
 
-The portfolio application automatically detects when `/models/om-avatar.glb` is present.
-* If absent: Automatically falls back to the existing 2D animated character.
-* If present: Seamlessly loads and renders the genuine 3D model with Three.js studio lighting, pink rim light, and mouse tracking.
+The portfolio checks for `/models/om-avatar.glb` before loading Three.js:
+
+* **Missing or unavailable:** The existing interactive 2D character renders
+  immediately. A missing file is an expected configuration state, not a
+  page-level error.
+* **Present but invalid or failed to load:** The 3D canvas is replaced by the
+  same 2D fallback through the avatar error boundary.
+* **Present and valid:** The model renders with Three.js studio lighting,
+  pink rim light, and pointer tracking.
+
+The fallback is the production-safe default and must remain functional when
+WebGL is unavailable, disabled, unsupported, or the model is removed.

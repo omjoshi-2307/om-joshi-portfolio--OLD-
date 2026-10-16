@@ -164,6 +164,15 @@ export const JOURNEY_MILESTONES: TechnicalMilestone[] = [
   },
 ];
 
+const JOURNEY_IMAGE_PATHS: Record<TechnicalMilestone['number'], string> = {
+  '01': '/media/journey/01-discovery.svg',
+  '02': '/media/journey/02-first-build.svg',
+  '03': '/media/journey/03-walle.svg',
+  '04': '/media/journey/04-hackathon.svg',
+  '05': '/media/journey/05-sured.svg',
+  '06': '/media/journey/06-now.svg',
+};
+
 // Preserved for backwards compatibility with any legacy imports
 export const JOURNEY_STAGES: JourneyStage[] = JOURNEY_MILESTONES.map((m) => ({
   id: `stage-${m.number}`,
@@ -175,7 +184,7 @@ export const JOURNEY_STAGES: JourneyStage[] = JOURNEY_MILESTONES.map((m) => ({
   narrative: m.narrative,
   technologies: m.technologies,
   visualType: m.number === '01' ? 'hardware' : m.number === '03' ? 'product' : m.number === '04' ? 'hackathon' : 'exploration',
-  imageSrc: `/media/journey/0${m.number}-stage.svg`,
+  imageSrc: JOURNEY_IMAGE_PATHS[m.number],
   imageAlt: `${m.title} milestone thumbnail`,
   repositoryUrl: m.projectLink?.url,
   repositoryName: m.projectLink?.label,

@@ -3,11 +3,12 @@ import { InteractiveCharacter } from '@/components/character/InteractiveCharacte
 import type { Avatar3DProps } from './avatar3d.types';
 
 /**
- * Avatar3DFallback renders the existing 2D animated character.
- * Used whenever:
- * 1. The 3D GLB file has not yet been placed in /models/om-avatar.glb
- * 2. WebGL is unsupported or disabled
- * 3. The 3D canvas is loading
+ * The production-safe avatar presentation.
+ *
+ * It intentionally reuses the existing 2D character rather than rendering a
+ * placeholder. Avatar3D uses this component while the optional GLB is
+ * unavailable, while it is loading, when WebGL is unsupported, and after any
+ * model or canvas error.
  */
 export const Avatar3DFallback: React.FC<Avatar3DProps> = ({
   className,

@@ -56,9 +56,10 @@ class CanvasErrorBoundary extends Component<CanvasErrorBoundaryProps, CanvasErro
 
 /**
  * Avatar3D
- * Production 3D avatar wrapper with automatic fallback:
- * - If /models/om-avatar.glb exists and WebGL is supported -> Renders real 3D model
- * - If /models/om-avatar.glb is absent, loading, or fails -> Renders existing 2D character
+ * Optional 3D avatar wrapper with a production-safe 2D fallback:
+ * - If the approved GLB exists and WebGL is supported, render the 3D model.
+ * - If the GLB is absent, loading, invalid, or fails at runtime, render the
+ *   existing 2D character without interrupting the page.
  */
 export const Avatar3D: React.FC<Avatar3DProps> = (props) => {
   const {
