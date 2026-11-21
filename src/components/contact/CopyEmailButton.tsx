@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Copy, Check } from 'lucide-react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { cn } from '@/utils/cn';
-
+import { copyTextToClipboard } from '@/utils/copyTextToClipboard';
 export interface CopyEmailButtonProps {
   email: string;
   className?: string;
   variant?: 'compact' | 'pill' | 'button';
 }
-
 export const CopyEmailButton: React.FC<CopyEmailButtonProps> = ({
   email,
   className,
@@ -17,33 +16,34 @@ export const CopyEmailButton: React.FC<CopyEmailButtonProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const prefersReduced = useReducedMotion();
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    if (resetTimerRef.current !== null) {
+      clearTimeout(resetTimerRef.current);
+    }
+  }, []);
 
   const handleCopy = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
     try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        // Fallback for non-secure / older browser environments
-        const textArea = document.createElement('textarea');
-        textArea.value = email;
-        textArea.style.position = 'fixed';
-        textArea.style.opacity = '0';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-      }
-
+      await copyTextToClipboard(email);
       setCopied(true);
-      setTimeout(() => {
+      if (resetTimerRef.current !== null) {
+        clearTimeout(resetTimerRef.current);
+      }
+      resetTimerRef.current = setTimeout(() => {
         setCopied(false);
+        resetTimerRef.current = null;
       }, 2500);
     } catch {
       setCopied(false);
+      if (resetTimerRef.current !== null) {
+        clearTimeout(resetTimerRef.current);
+        resetTimerRef.current = null;
+      }
     }
   };
 
