@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "test": "node --test scripts/project-validation.test.mjs",
+    "test": "node --test scripts/project-validation.test.mjs scripts/copy-to-clipboard.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
