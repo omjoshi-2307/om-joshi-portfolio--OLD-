@@ -30,12 +30,12 @@ const NotFoundPage = lazy(() =>
   }))
 );
 
-const CaseStudyLoadingFallback: React.FC = () => (
+const CaseStudyLoadingFallback: React.FC<{ label: string }> = ({ label }) => (
   <div role="status" aria-live="polite" className="min-h-[60vh] py-24 flex items-center justify-center bg-background">
     <div className="flex flex-col items-center gap-4">
       <div aria-hidden="true" className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin motion-reduce:animate-none" />
       <span className="font-mono text-xs text-muted-subtle tracking-widest uppercase">
-        LOADING CASE STUDY...
+        {label}
       </span>
     </div>
   </div>
@@ -64,7 +64,7 @@ const PortfolioShellView: React.FC = () => {
       if (caseStudy) {
         return (
           <PageTransition key={`casestudy-${caseStudy.id}`} routeKey={`casestudy-${caseStudy.id}`}>
-            <Suspense fallback={<CaseStudyLoadingFallback />}>
+            <Suspense fallback={<CaseStudyLoadingFallback label="LOADING CASE STUDY..." />}>
               <ProjectCaseStudyPage
                 caseStudy={caseStudy}
                 onNavigate={(to) => navigate(to)}
@@ -76,7 +76,7 @@ const PortfolioShellView: React.FC = () => {
 
       return (
         <PageTransition key="404" routeKey="404">
-          <Suspense fallback={<CaseStudyLoadingFallback />}>
+          <Suspense fallback={<CaseStudyLoadingFallback label="LOADING PAGE..." />}>
             <NotFoundPage onGoHome={() => navigate('/')} />
           </Suspense>
         </PageTransition>
@@ -95,7 +95,7 @@ const PortfolioShellView: React.FC = () => {
     // Fallback 404 for any other unrecognized route
     return (
       <PageTransition key="404" routeKey="404">
-        <Suspense fallback={<CaseStudyLoadingFallback />}>
+        <Suspense fallback={<CaseStudyLoadingFallback label="LOADING PAGE..." />}>
           <NotFoundPage onGoHome={() => navigate('/')} />
         </Suspense>
       </PageTransition>
