@@ -31,7 +31,7 @@ const NotFoundPage = lazy(() =>
 );
 
 const CaseStudyLoadingFallback: React.FC = () => (
-  <div role="status" aria-live="polite" aria-busy="true" className="min-h-[60vh] py-24 flex items-center justify-center bg-background">
+  <div role="status" aria-live="polite" className="min-h-[60vh] py-24 flex items-center justify-center bg-background">
     <div className="flex flex-col items-center gap-4">
       <div aria-hidden="true" className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin motion-reduce:animate-none" />
       <span className="font-mono text-xs text-muted-subtle tracking-widest uppercase">
