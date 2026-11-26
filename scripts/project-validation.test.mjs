@@ -76,7 +76,7 @@ const appSource = readProjectFile('src/App.tsx');
 
 test('lazy route loading fallback announces status and respects reduced motion', () => {
   const fallback = appSource.match(
-    /const CaseStudyLoadingFallback:[\\s\\S]*?\\n\\);/
+    /const CaseStudyLoadingFallback:[\s\S]*?\n\);/
   )?.[0];
 
   assert.ok(fallback, 'CaseStudyLoadingFallback should exist');
@@ -84,6 +84,6 @@ test('lazy route loading fallback announces status and respects reduced motion',
   assert.match(fallback, /aria-live="polite"/);
   assert.match(fallback, /aria-hidden="true"[^>]*motion-reduce:animate-none/);
   assert.doesNotMatch(fallback, /aria-busy/);
-  assert.match(appSource, /<CaseStudyLoadingFallback label="LOADING CASE STUDY\\.\\.\\." \\/>/);
-  assert.match(appSource, /<CaseStudyLoadingFallback label="LOADING PAGE\\.\\.\\." \\/>/);
+  assert.match(appSource, /<CaseStudyLoadingFallback label="LOADING CASE STUDY\.\.\." \/>/);
+  assert.match(appSource, /<CaseStudyLoadingFallback label="LOADING PAGE\.\.\." \/>/);
 });
